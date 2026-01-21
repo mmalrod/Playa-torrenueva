@@ -21,7 +21,6 @@
             -webkit-tap-highlight-color: transparent; 
         }
 
-        /* Efecto de cristal para contenedores */
         .glass-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
@@ -29,11 +28,9 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
 
-        /* Animaciones */
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Estilización de Inputs */
         input, select, textarea {
             transition: all 0.2s ease;
             border: 2px solid #f1f5f9 !important;
@@ -44,7 +41,7 @@
             background: white !important;
         }
 
-        /* Diseño de Gráfico Pro */
+        /* Gráfico */
         .bar-chart { 
             display: flex; 
             align-items: flex-end; 
@@ -54,14 +51,7 @@
             background: linear-gradient(to bottom, #ffffff, #f1f5f9);
             border-radius: 24px;
         }
-        .bar-container { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            height: 100%; 
-            position: relative;
-        }
+        .bar-container { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; position: relative; }
         .bar { 
             width: 100%; 
             background: linear-gradient(to top, var(--primary), var(--accent));
@@ -70,36 +60,27 @@
             transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
             box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
         }
-        .bar-label-num { 
-            position: absolute; 
-            top: -30px; 
-            width: 100%; 
-            text-align: center; 
-            font-size: 14px; 
-            font-weight: 800; 
-            color: var(--primary); 
-        }
+        .bar-label-num { position: absolute; top: -30px; width: 100%; text-align: center; font-size: 14px; font-weight: 800; color: var(--primary); }
         .bar-name-tag { 
-            position: absolute; 
-            bottom: -65px; 
-            width: 100%;
-            text-align: center;
-            font-size: 8px; 
-            font-weight: 700; 
-            color: #475569;
-            background: white;
-            padding: 8px 4px;
-            border-radius: 12px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            border: 1px solid #e2e8f0;
-            min-height: 45px;
-            display: flex; align-items: center; justify-content: center;
+            position: absolute; bottom: -65px; width: 100%; text-align: center; font-size: 8px; font-weight: 700; color: #475569;
+            background: white; padding: 8px 4px; border-radius: 12px; text-transform: uppercase; border: 1px solid #e2e8f0;
+            min-height: 45px; display: flex; align-items: center; justify-content: center;
         }
 
-        /* Tabla Estilo Moderno */
-        th { font-weight: 700 !important; color: #64748b !important; }
-        tr:hover { background-color: #f8fafc; }
+        /* Estilo para el input de número limpio */
+        .input-numero-limpio {
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            width: 60px !important;
+            text-align: left;
+        }
+        .input-numero-limpio:focus {
+            border-bottom-color: var(--accent) !important;
+            box-shadow: none !important;
+        }
 
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
@@ -109,49 +90,44 @@
     <div id="seccionLogin" class="flex items-center justify-center min-h-screen p-6">
         <div class="max-w-md w-full glass-card rounded-[2.5rem] overflow-hidden">
             <div class="bg-blue-700 p-10 text-center text-white relative">
-                <div class="absolute top-4 right-4 opacity-20 text-4xl font-black">2026</div>
                 <h1 class="text-4xl font-extrabold italic tracking-tighter uppercase">PLAYA-TORR</h1>
-                <p class="text-blue-200 text-xs uppercase tracking-[0.3em] mt-3 font-semibold">Gestión de Salvamento</p>
+                <p class="text-blue-200 text-xs uppercase tracking-[0.3em] mt-3 font-semibold">Torrenueva Costa 2026</p>
             </div>
             <form onsubmit="entrar(event)" class="p-10 space-y-5">
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-400 ml-2 uppercase">Identificación</label>
-                    <input type="text" id="usuario" placeholder="Usuario" class="w-full bg-slate-50 rounded-2xl p-4 outline-none font-bold uppercase" required>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-400 ml-2 uppercase">Seguridad</label>
-                    <input type="password" id="clave" placeholder="••••••••" class="w-full bg-slate-50 rounded-2xl p-4 outline-none" required>
-                </div>
-                <button type="submit" id="btnLogin" class="w-full bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-800 transition-all uppercase tracking-widest mt-4">Iniciar Sesión</button>
+                <input type="text" id="usuario" placeholder="USUARIO" class="w-full bg-slate-50 rounded-2xl p-4 outline-none font-bold uppercase" required>
+                <input type="password" id="clave" placeholder="••••••••" class="w-full bg-slate-50 rounded-2xl p-4 outline-none" required>
+                <button type="submit" id="btnLogin" class="w-full bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-800 transition-all uppercase tracking-widest mt-4">Acceder</button>
             </form>
         </div>
     </div>
 
     <div id="seccionRegistro" class="hidden max-w-lg mx-auto p-6 fade-in">
         <header class="flex justify-between items-center py-8">
-            <div>
-                <p class="text-blue-500 text-[10px] font-black uppercase tracking-widest">Puesto Operativo</p>
-                <h2 id="tituloPuesto" class="text-3xl font-extrabold text-slate-800 uppercase italic"></h2>
-            </div>
-            <button onclick="salir()" class="bg-white text-red-500 p-4 rounded-2xl font-bold text-xs shadow-sm hover:bg-red-50 transition-colors uppercase">Salir</button>
+            <h2 id="tituloPuesto" class="text-3xl font-extrabold text-slate-800 uppercase italic"></h2>
+            <button onclick="salir()" class="bg-white text-red-500 p-4 rounded-2xl font-bold text-xs shadow-sm uppercase">Salir</button>
         </header>
 
-        <form id="formulario" class="glass-card p-8 rounded-[2rem] space-y-7 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-emerald-500"></div>
+        <form id="formulario" class="glass-card p-8 rounded-[2rem] space-y-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-blue-600"></div>
             <input type="hidden" id="puestoActual">
             
-            <div class="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Número Indicativo</label>
-                <div class="flex items-center">
-                    <span class="text-3xl font-black text-blue-300 mr-2">J48-</span>
-                    <input type="number" id="pacienteNumero" placeholder="000" min="0" inputmode="numeric" class="w-full text-3xl font-black outline-none bg-transparent text-slate-700" required>
+            <div class="py-4">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block">Número Indicativo</label>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-4xl font-black text-blue-700 italic">J48-</span>
+                    <input type="number" id="pacienteNumero" 
+                           oninput="if(this.value.length > 2) this.value = this.value.slice(0, 2)" 
+                           max="99" min="0" 
+                           inputmode="numeric" 
+                           class="input-numero-limpio text-4xl font-black text-slate-700 outline-none" 
+                           required>
                 </div>
             </div>
 
             <div class="space-y-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 block">Categoría de Asistencia</label>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 block">Tipo de Asistencia</label>
                 <select id="tipo" class="w-full text-lg font-bold bg-slate-50 rounded-2xl p-5 outline-none appearance-none cursor-pointer" required>
-                    <option value="" disabled selected>Selecciona una opción...</option>
+                    <option value="" disabled selected>Seleccionar...</option>
                     <option>Picadura Medusa</option>
                     <option>Herida / Corte</option>
                     <option>Erizo / Pez Araña</option>
@@ -162,75 +138,42 @@
             </div>
 
             <div class="space-y-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 block">Observaciones adicionales</label>
-                <textarea id="obs" placeholder="Describe brevemente la intervención..." class="w-full bg-slate-50 p-5 h-32 rounded-2xl outline-none resize-none font-medium"></textarea>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 block">Observaciones</label>
+                <textarea id="obs" class="w-full bg-slate-50 p-5 h-32 rounded-2xl outline-none resize-none font-medium"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-emerald-500 text-white font-black py-6 rounded-2xl shadow-xl hover:bg-emerald-600 active:scale-95 transition-all text-xl uppercase tracking-tighter">Registrar Intervención</button>
+            <button type="submit" class="w-full bg-emerald-500 text-white font-black py-6 rounded-2xl shadow-xl hover:bg-emerald-600 transition-all text-xl uppercase italic">Enviar Registro</button>
         </form>
     </div>
 
     <div id="seccionAdmin" class="hidden p-6 md:p-12 max-w-[1400px] mx-auto fade-in">
         <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 glass-card p-8 rounded-3xl">
-            <div class="flex items-center gap-4">
-                <div class="bg-blue-600 p-3 rounded-2xl text-white font-black">T26</div>
-                <div>
-                    <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Panel Administrativo</h1>
-                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Torrenueva Costa • Temporada 2026</p>
-                </div>
-            </div>
+            <h1 class="text-2xl font-black text-slate-800 uppercase">Panel Admin 2026</h1>
             <div class="flex gap-3">
-                <button onclick="exportarExcel()" class="bg-emerald-500 text-white px-8 py-3 rounded-xl font-bold text-xs shadow-lg hover:bg-emerald-600 transition-all uppercase tracking-widest">Exportar Excel</button>
-                <button onclick="salir()" class="bg-slate-100 text-slate-500 px-6 py-3 rounded-xl font-bold text-xs hover:bg-slate-200 transition-all uppercase">Cerrar Sesión</button>
+                <button onclick="exportarExcel()" class="bg-emerald-500 text-white px-8 py-3 rounded-xl font-bold text-xs uppercase">Excel</button>
+                <button onclick="salir()" class="bg-slate-100 text-slate-500 px-6 py-3 rounded-xl font-bold text-xs uppercase">Salir</button>
             </div>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-4 gap-8 mb-10">
             <div class="xl:col-span-3 glass-card p-8 rounded-[2rem]">
-                <h3 class="text-[11px] font-black text-slate-400 uppercase mb-8 tracking-[0.2em] flex items-center gap-2">
-                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span> Análisis de Intervenciones
-                </h3>
                 <div id="graficoBarras" class="bar-chart"></div>
             </div>
-            <div class="glass-card p-8 rounded-[2rem] flex flex-col justify-center items-center relative overflow-hidden">
-                <div class="absolute -right-4 -bottom-4 text-slate-50 text-9xl font-black">#</div>
-                <p class="text-[11px] font-black text-slate-400 uppercase mb-4 tracking-widest relative z-10 text-center">Registros Totales</p>
-                <p id="contadorTotal" class="text-8xl font-black text-blue-700 leading-none relative z-10">0</p>
-            </div>
-        </div>
-
-        <div class="glass-card p-6 rounded-[2rem] mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="space-y-1">
-                <label class="text-[9px] font-black text-slate-400 uppercase ml-2">Desde</label>
-                <input type="date" id="fechaDesde" onchange="aplicarFiltros()" class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none">
-            </div>
-            <div class="space-y-1">
-                <label class="text-[9px] font-black text-slate-400 uppercase ml-2">Hasta</label>
-                <input type="date" id="fechaHasta" onchange="aplicarFiltros()" class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none">
-            </div>
-            <div class="space-y-1">
-                <label class="text-[9px] font-black text-slate-400 uppercase ml-2">Filtrar por Puesto</label>
-                <select id="filtroPuesto" onchange="aplicarFiltros()" class="w-full p-3 bg-slate-50 rounded-xl text-xs font-black uppercase outline-none">
-                    <option value="TODOS">Todos los Puestos</option>
-                    <option>BRAVO 1</option><option>BRAVO 2</option><option>BRAVO 3</option><option>BRAVO 4</option><option>BRAVO 5</option>
-                </select>
-            </div>
-            <div class="space-y-1">
-                <label class="text-[9px] font-black text-slate-400 uppercase ml-2">Búsqueda Rápida</label>
-                <input type="text" id="filtroTexto" onkeyup="aplicarFiltros()" placeholder="Ej: J48-001" class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold uppercase outline-none">
+            <div class="glass-card p-8 rounded-[2rem] flex flex-col justify-center items-center">
+                <p class="text-[11px] font-black text-slate-400 uppercase mb-4 tracking-widest">Total</p>
+                <p id="contadorTotal" class="text-8xl font-black text-blue-700">0</p>
             </div>
         </div>
 
         <div class="glass-card rounded-[2rem] overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead>
-                        <tr class="bg-slate-50/50 text-[11px] uppercase tracking-widest text-slate-400 border-b">
-                            <th class="p-6">Fecha / Hora</th>
+                    <thead class="bg-slate-50 text-[11px] uppercase text-slate-400 border-b">
+                        <tr>
+                            <th class="p-6">Fecha</th>
                             <th class="p-6">Puesto</th>
                             <th class="p-6">Tipo</th>
                             <th class="p-6">Indicativo</th>
-                            <th class="p-6">Observaciones</th>
                             <th class="p-6 text-center">Acción</th>
                         </tr>
                     </thead>
@@ -266,11 +209,9 @@
             const btn = document.getElementById('btnLogin');
             let rawUser = document.getElementById('usuario').value.trim();
             let pass = document.getElementById('clave').value;
-            let loginEmail = rawUser.toLowerCase().replace(/\s+/g, '');
-            let email = loginEmail === "admin" ? "admin@playatorrenueva.com" : `${loginEmail}@playatorrenueva.com`;
-            let nombreLimpio = rawUser.toUpperCase().replace("BRAVO", "BRAVO ").replace(/\s+/g, ' ').trim();
+            let email = (rawUser.toLowerCase() === "admin") ? "admin@playatorrenueva.com" : `${rawUser.toLowerCase().replace(/\s+/g, '')}@playatorrenueva.com`;
 
-            btn.innerText = "VERIFICANDO..."; btn.disabled = true;
+            btn.innerText = "ACCEDIENDO..."; btn.disabled = true;
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, pass);
                 document.getElementById('seccionLogin').classList.add('hidden');
@@ -279,20 +220,20 @@
                     iniciarEscuchaAdmin();
                 } else {
                     document.getElementById('seccionRegistro').classList.remove('hidden');
-                    document.getElementById('tituloPuesto').innerText = nombreLimpio;
-                    document.getElementById('puestoActual').value = nombreLimpio;
+                    document.getElementById('tituloPuesto').innerText = rawUser.toUpperCase();
+                    document.getElementById('puestoActual').value = rawUser.toUpperCase();
                 }
-            } catch (err) { alert("Acceso Incorrecto"); }
-            btn.innerText = "INICIAR SESIÓN"; btn.disabled = false;
+            } catch (err) { alert("Error de acceso"); }
+            btn.innerText = "ACCEDER"; btn.disabled = false;
         };
 
-        window.salir = () => { if(confirm("¿Cerrar sesión de seguridad?")) { signOut(auth); location.reload(); } };
+        window.salir = () => { signOut(auth); location.reload(); };
 
         document.getElementById('formulario').onsubmit = async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const num = document.getElementById('pacienteNumero').value;
-            btn.innerText = "PROCESANDO..."; btn.disabled = true;
+            btn.innerText = "ENVIANDO..."; btn.disabled = true;
             try {
                 await addDoc(collection(db, "asistencias"), {
                     puesto: document.getElementById('puestoActual').value,
@@ -303,15 +244,13 @@
                     fechaISO: new Date().toISOString().split('T')[0],
                     fechaTxt: new Date().toLocaleString()
                 });
-                alert("✅ Registrado con éxito: J48-" + num); 
+                alert("✅ Registrado J48-" + num); 
                 e.target.reset();
-            } catch (err) { alert("Error al enviar"); }
-            btn.innerText = "REGISTRAR INTERVENCIÓN"; btn.disabled = false;
+            } catch (err) { alert("Error al registrar"); }
+            btn.innerText = "ENVIAR REGISTRO"; btn.disabled = false;
         };
 
         let datosLocales = [];
-        let filtradosActuales = [];
-
         function iniciarEscuchaAdmin() {
             const q = query(collection(db, "asistencias"), orderBy("fecha", "desc"), limit(1000));
             onSnapshot(q, (snap) => {
@@ -319,39 +258,26 @@
                 snap.forEach(d => {
                     const data = d.data();
                     let f = data.fecha ? data.fecha.toDate().toLocaleString() : data.fechaTxt;
-                    let fISO = data.fecha ? data.fecha.toDate().toISOString().split('T')[0] : data.fechaISO;
-                    datosLocales.push({ id: d.id, f, fISO, ...data });
+                    datosLocales.push({ id: d.id, f, ...data });
                 });
                 aplicarFiltros();
             });
         }
 
         window.aplicarFiltros = () => {
-            const txt = document.getElementById('filtroTexto').value.toLowerCase();
-            const pst = document.getElementById('filtroPuesto').value;
-            const fD = document.getElementById('fechaDesde').value;
-            const fH = document.getElementById('fechaHasta').value;
-
-            filtradosActuales = datosLocales.filter(d => {
-                return (d.paciente.toLowerCase().includes(txt)) && 
-                       (pst === "TODOS" || d.puesto === pst) &&
-                       (!fD || d.fISO >= fD) && (!fH || d.fISO <= fH);
-            });
-
             let html = "";
-            filtradosActuales.forEach(d => {
-                html += `<tr class="hover:bg-blue-50/30 transition-colors">
+            datosLocales.forEach(d => {
+                html += `<tr>
                     <td class="p-6 text-[11px] font-mono text-slate-400">${d.f}</td>
                     <td class="p-6 font-bold text-slate-800 uppercase italic text-xs">${d.puesto}</td>
                     <td class="p-6 font-bold text-slate-500 text-xs uppercase">${d.tipo}</td>
                     <td class="p-6 font-black text-blue-700">${d.paciente}</td>
-                    <td class="p-6 text-xs text-slate-500 max-w-xs truncate" title="${d.obs}">${d.obs}</td>
-                    <td class="p-6 text-center"><button onclick="eliminar('${d.id}')" class="text-red-400 font-bold hover:text-red-600 transition-colors uppercase text-[10px]">Borrar</button></td>
+                    <td class="p-6 text-center"><button onclick="eliminar('${d.id}')" class="text-red-400 font-bold hover:text-red-600 uppercase text-[10px]">Borrar</button></td>
                 </tr>`;
             });
-            document.getElementById('listaCompleta').innerHTML = html || '<tr><td colspan="6" class="p-10 text-center text-slate-300 italic">No hay registros</td></tr>';
-            document.getElementById('contadorTotal').innerText = filtradosActuales.length;
-            actualizarGrafico(filtradosActuales);
+            document.getElementById('listaCompleta').innerHTML = html;
+            document.getElementById('contadorTotal').innerText = datosLocales.length;
+            actualizarGrafico(datosLocales);
         };
 
         function actualizarGrafico(datos) {
@@ -359,35 +285,17 @@
             const tipos = ["Picadura Medusa", "Herida / Corte", "Erizo / Pez Araña", "Golpe de Calor", "Rescate Acuático", "Otro"];
             tipos.forEach(t => resumen[t] = 0);
             datos.forEach(d => { if(resumen.hasOwnProperty(d.tipo)) resumen[d.tipo]++; });
-            
             const max = Math.max(...Object.values(resumen), 1);
             let html = "";
             tipos.forEach(tipo => {
                 const valor = resumen[tipo];
                 const pct = (valor / max) * 100;
-                html += `
-                    <div class="bar-container">
-                        <div class="bar" style="height: ${pct}%">
-                            <span class="bar-label-num">${valor > 0 ? valor : ''}</span>
-                        </div>
-                        <div class="bar-name-tag">${tipo}</div>
-                    </div>`;
+                html += `<div class="bar-container"><div class="bar" style="height: ${pct}%"><span class="bar-label-num">${valor > 0 ? valor : ''}</span></div><div class="bar-name-tag">${tipo}</div></div>`;
             });
             document.getElementById('graficoBarras').innerHTML = html;
         }
 
-        window.eliminar = async (id) => { if(confirm("¿Seguro que quieres eliminar este registro de seguridad?")) await deleteDoc(doc(db, "asistencias", id)); };
-
-        window.exportarExcel = () => {
-            let csv = "\uFEFFFECHA / HORA;PUESTO;TIPO;INDICATIVO;OBSERVACIONES\n";
-            filtradosActuales.forEach(d => {
-                let obs = d.obs.replace(/(\r\n|\n|\r|;)/gm, " ");
-                csv += `${d.f};${d.puesto};${d.tipo};${d.paciente};${obs}\n`;
-            });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-            link.download = `Torrenueva_Export_2026.csv`; link.click();
-        };
+        window.eliminar = async (id) => { if(confirm("¿Borrar?")) await deleteDoc(doc(db, "asistencias", id)); };
     </script>
 </body>
 </html>
