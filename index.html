@@ -140,11 +140,16 @@
             <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-emerald-500"></div>
             <input type="hidden" id="puestoActual">
             
-            <div class="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100">
+            <div class="p-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Número Indicativo</label>
                 <div class="flex items-center">
-                    <span class="text-3xl font-black text-blue-300 mr-2">J48-</span>
-                    <input type="number" id="pacienteNumero" placeholder="000" min="0" inputmode="numeric" class="w-full text-3xl font-black outline-none bg-transparent text-slate-700" required>
+                    <span class="text-4xl font-black text-blue-600 mr-1 italic">J48-</span>
+                    <input type="number" id="pacienteNumero" 
+                           oninput="if(this.value.length > 2) this.value = this.value.slice(0, 2)" 
+                           max="99" min="0" 
+                           inputmode="numeric" 
+                           class="w-full text-4xl font-black outline-none bg-transparent text-slate-700 border-none !border-0 focus:ring-0" 
+                           required>
                 </div>
             </div>
 
@@ -217,7 +222,7 @@
             </div>
             <div class="space-y-1">
                 <label class="text-[9px] font-black text-slate-400 uppercase ml-2">Búsqueda Rápida</label>
-                <input type="text" id="filtroTexto" onkeyup="aplicarFiltros()" placeholder="Ej: J48-001" class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold uppercase outline-none">
+                <input type="text" id="filtroTexto" onkeyup="aplicarFiltros()" placeholder="Ej: J48-00" class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold uppercase outline-none">
             </div>
         </div>
 
