@@ -17,6 +17,7 @@
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         .fade-in { animation: fadeIn 0.3s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* He quitado el forzado de mayúsculas visual para evitar confusiones */
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
@@ -32,7 +33,7 @@
             <form onsubmit="entrar(event)" class="p-8 space-y-4">
                 <div>
                     <label class="text-xs font-bold text-slate-400 ml-2 uppercase">Usuario (Bravo 1, Admin...)</label>
-                    <input type="text" id="usuario" placeholder="Ej: BRAVO 1" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 outline-none focus:border-blue-500 uppercase font-bold" required>
+                    <input type="text" id="usuario" placeholder="Ej: bravo 1" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 outline-none focus:border-blue-500 font-bold" required>
                 </div>
                 <div>
                     <label class="text-xs font-bold text-slate-400 ml-2 uppercase">Contraseña</label>
@@ -161,23 +162,33 @@
         window.entrar = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnLogin');
-            let user = document.getElementById('usuario').value.trim().toUpperCase();
+            
+            // CORRECCIÓN: Limpiamos el texto y lo pasamos a minúsculas antes de procesar
+            let rawUser = document.getElementById('usuario').value.trim().toLowerCase();
             let pass = document.getElementById('clave').value;
-            let email = user === "ADMIN" ? "admin@playatorrenueva.com" : `${user.replace(/\s+/g, '').toLowerCase()}@playatorrenueva.com`;
+            
+            // Construimos el email siempre en minúsculas
+            let email = rawUser === "admin" ? "admin@playatorrenueva.com" : `${rawUser.replace(/\s+/g, '')}@playatorrenueva.com`;
 
             btn.innerText = "CARGANDO..."; btn.disabled = true;
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, pass);
                 document.getElementById('seccionLogin').classList.add('hidden');
+                
                 if (userCredential.user.email === "admin@playatorrenueva.com") {
                     document.getElementById('seccionAdmin').classList.remove('hidden');
                     iniciarEscuchaAdmin();
                 } else {
                     document.getElementById('seccionRegistro').classList.remove('hidden');
-                    document.getElementById('tituloPuesto').innerText = user;
-                    document.getElementById('puestoActual').value = user;
+                    // Mostramos el nombre del puesto en mayúsculas solo para que quede bonito
+                    const nombrePuesto = rawUser.toUpperCase();
+                    document.getElementById('tituloPuesto').innerText = nombrePuesto;
+                    document.getElementById('puestoActual').value = nombrePuesto;
                 }
-            } catch (err) { alert("Error: Verifica usuario o contraseña."); }
+            } catch (err) { 
+                console.error(err);
+                alert("Error: Verifica usuario o contraseña."); 
+            }
             btn.innerText = "ACCEDER"; btn.disabled = false;
         };
 
