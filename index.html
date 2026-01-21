@@ -21,6 +21,7 @@
             -webkit-tap-highlight-color: transparent; 
         }
 
+        /* Efecto de cristal para contenedores */
         .glass-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
@@ -28,9 +29,11 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
 
+        /* Animaciones */
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Estilización de Inputs Generales */
         input, select, textarea {
             transition: all 0.2s ease;
             border: 2px solid #f1f5f9 !important;
@@ -41,7 +44,22 @@
             background: white !important;
         }
 
-        /* Gráfico */
+        /* DISEÑO DE INDICATIVO LIMPIO (PEDIDO) */
+        .input-indicativo-minimal {
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 3px solid #3b82f6 !important;
+            border-radius: 0 !important;
+            width: 80px !important;
+            padding: 0 !important;
+            margin-left: 8px;
+        }
+        .input-indicativo-minimal:focus {
+            box-shadow: none !important;
+            border-bottom-color: #10b981 !important;
+        }
+
+        /* Diseño de Gráfico Pro */
         .bar-chart { 
             display: flex; 
             align-items: flex-end; 
@@ -63,23 +81,8 @@
         .bar-label-num { position: absolute; top: -30px; width: 100%; text-align: center; font-size: 14px; font-weight: 800; color: var(--primary); }
         .bar-name-tag { 
             position: absolute; bottom: -65px; width: 100%; text-align: center; font-size: 8px; font-weight: 700; color: #475569;
-            background: white; padding: 8px 4px; border-radius: 12px; text-transform: uppercase; border: 1px solid #e2e8f0;
-            min-height: 45px; display: flex; align-items: center; justify-content: center;
-        }
-
-        /* Estilo para el input de número limpio */
-        .input-numero-limpio {
-            background: transparent !important;
-            border: none !important;
-            border-bottom: 2px solid #e2e8f0 !important;
-            border-radius: 0 !important;
-            padding: 0 !important;
-            width: 60px !important;
-            text-align: left;
-        }
-        .input-numero-limpio:focus {
-            border-bottom-color: var(--accent) !important;
-            box-shadow: none !important;
+            background: white; padding: 8px 4px; border-radius: 12px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0; min-height: 45px; display: flex; align-items: center; justify-content: center;
         }
 
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
@@ -88,7 +91,7 @@
 <body>
 
     <div id="seccionLogin" class="flex items-center justify-center min-h-screen p-6">
-        <div class="max-w-md w-full glass-card rounded-[2.5rem] overflow-hidden">
+        <div class="max-w-md w-full glass-card rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-2xl">
             <div class="bg-blue-700 p-10 text-center text-white relative">
                 <h1 class="text-4xl font-extrabold italic tracking-tighter uppercase">PLAYA-TORR</h1>
                 <p class="text-blue-200 text-xs uppercase tracking-[0.3em] mt-3 font-semibold">Torrenueva Costa 2026</p>
@@ -96,7 +99,7 @@
             <form onsubmit="entrar(event)" class="p-10 space-y-5">
                 <input type="text" id="usuario" placeholder="USUARIO" class="w-full bg-slate-50 rounded-2xl p-4 outline-none font-bold uppercase" required>
                 <input type="password" id="clave" placeholder="••••••••" class="w-full bg-slate-50 rounded-2xl p-4 outline-none" required>
-                <button type="submit" id="btnLogin" class="w-full bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-800 transition-all uppercase tracking-widest mt-4">Acceder</button>
+                <button type="submit" id="btnLogin" class="w-full bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl hover:bg-blue-800 transition-all uppercase mt-4">Acceder</button>
             </form>
         </div>
     </div>
@@ -107,19 +110,19 @@
             <button onclick="salir()" class="bg-white text-red-500 p-4 rounded-2xl font-bold text-xs shadow-sm uppercase">Salir</button>
         </header>
 
-        <form id="formulario" class="glass-card p-8 rounded-[2rem] space-y-8 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-2 bg-blue-600"></div>
+        <form id="formulario" class="glass-card p-8 rounded-[2.5rem] space-y-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-emerald-500"></div>
             <input type="hidden" id="puestoActual">
             
-            <div class="py-4">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block">Número Indicativo</label>
-                <div class="flex items-baseline gap-1">
+            <div class="flex flex-col">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Indicativo</label>
+                <div class="flex items-baseline">
                     <span class="text-4xl font-black text-blue-700 italic">J48-</span>
                     <input type="number" id="pacienteNumero" 
                            oninput="if(this.value.length > 2) this.value = this.value.slice(0, 2)" 
                            max="99" min="0" 
                            inputmode="numeric" 
-                           class="input-numero-limpio text-4xl font-black text-slate-700 outline-none" 
+                           class="input-indicativo-minimal text-4xl font-black text-slate-700 outline-none" 
                            required>
                 </div>
             </div>
@@ -139,7 +142,7 @@
 
             <div class="space-y-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 block">Observaciones</label>
-                <textarea id="obs" class="w-full bg-slate-50 p-5 h-32 rounded-2xl outline-none resize-none font-medium"></textarea>
+                <textarea id="obs" class="w-full bg-slate-50 border-2 border-slate-100 p-5 h-32 rounded-2xl outline-none resize-none font-medium"></textarea>
             </div>
 
             <button type="submit" class="w-full bg-emerald-500 text-white font-black py-6 rounded-2xl shadow-xl hover:bg-emerald-600 transition-all text-xl uppercase italic">Enviar Registro</button>
@@ -148,29 +151,33 @@
 
     <div id="seccionAdmin" class="hidden p-6 md:p-12 max-w-[1400px] mx-auto fade-in">
         <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 glass-card p-8 rounded-3xl">
-            <h1 class="text-2xl font-black text-slate-800 uppercase">Panel Admin 2026</h1>
+            <div class="flex items-center gap-4">
+                <div class="bg-blue-600 p-3 rounded-2xl text-white font-black tracking-tighter">2026</div>
+                <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Panel de Control</h1>
+            </div>
             <div class="flex gap-3">
-                <button onclick="exportarExcel()" class="bg-emerald-500 text-white px-8 py-3 rounded-xl font-bold text-xs uppercase">Excel</button>
+                <button onclick="exportarExcel()" class="bg-emerald-500 text-white px-8 py-3 rounded-xl font-bold text-xs shadow-lg uppercase">Excel</button>
                 <button onclick="salir()" class="bg-slate-100 text-slate-500 px-6 py-3 rounded-xl font-bold text-xs uppercase">Salir</button>
             </div>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-4 gap-8 mb-10">
             <div class="xl:col-span-3 glass-card p-8 rounded-[2rem]">
+                <h3 class="text-[11px] font-black text-slate-400 uppercase mb-8 tracking-[0.2em]">Estadísticas</h3>
                 <div id="graficoBarras" class="bar-chart"></div>
             </div>
             <div class="glass-card p-8 rounded-[2rem] flex flex-col justify-center items-center">
                 <p class="text-[11px] font-black text-slate-400 uppercase mb-4 tracking-widest">Total</p>
-                <p id="contadorTotal" class="text-8xl font-black text-blue-700">0</p>
+                <p id="contadorTotal" class="text-8xl font-black text-blue-700 leading-none">0</p>
             </div>
         </div>
 
         <div class="glass-card rounded-[2rem] overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-slate-50 text-[11px] uppercase text-slate-400 border-b">
+                    <thead class="bg-slate-50 text-[11px] uppercase tracking-widest text-slate-400 border-b">
                         <tr>
-                            <th class="p-6">Fecha</th>
+                            <th class="p-6">Fecha / Hora</th>
                             <th class="p-6">Puesto</th>
                             <th class="p-6">Tipo</th>
                             <th class="p-6">Indicativo</th>
@@ -202,38 +209,36 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        enableIndexedDbPersistence(db).catch(() => console.log("Offline OK"));
+        enableIndexedDbPersistence(db).catch(() => {});
 
         window.entrar = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnLogin');
-            let rawUser = document.getElementById('usuario').value.trim();
-            let pass = document.getElementById('clave').value;
-            let email = (rawUser.toLowerCase() === "admin") ? "admin@playatorrenueva.com" : `${rawUser.toLowerCase().replace(/\s+/g, '')}@playatorrenueva.com`;
-
+            let u = document.getElementById('usuario').value.trim().toLowerCase().replace(/\s+/g, '');
+            let p = document.getElementById('clave').value;
+            let email = u === "admin" ? "admin@playatorrenueva.com" : `${u}@playatorrenueva.com`;
+            
             btn.innerText = "ACCEDIENDO..."; btn.disabled = true;
             try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+                const userCredential = await signInWithEmailAndPassword(auth, email, p);
                 document.getElementById('seccionLogin').classList.add('hidden');
                 if (userCredential.user.email === "admin@playatorrenueva.com") {
                     document.getElementById('seccionAdmin').classList.remove('hidden');
                     iniciarEscuchaAdmin();
                 } else {
                     document.getElementById('seccionRegistro').classList.remove('hidden');
-                    document.getElementById('tituloPuesto').innerText = rawUser.toUpperCase();
-                    document.getElementById('puestoActual').value = rawUser.toUpperCase();
+                    document.getElementById('tituloPuesto').innerText = u.toUpperCase();
+                    document.getElementById('puestoActual').value = u.toUpperCase();
                 }
-            } catch (err) { alert("Error de acceso"); }
+            } catch (err) { alert("Acceso denegado"); }
             btn.innerText = "ACCEDER"; btn.disabled = false;
         };
 
-        window.salir = () => { signOut(auth); location.reload(); };
+        window.salir = () => { if(confirm("¿Cerrar sesión?")) { signOut(auth); location.reload(); } };
 
         document.getElementById('formulario').onsubmit = async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
             const num = document.getElementById('pacienteNumero').value;
-            btn.innerText = "ENVIANDO..."; btn.disabled = true;
             try {
                 await addDoc(collection(db, "asistencias"), {
                     puesto: document.getElementById('puestoActual').value,
@@ -246,8 +251,7 @@
                 });
                 alert("✅ Registrado J48-" + num); 
                 e.target.reset();
-            } catch (err) { alert("Error al registrar"); }
-            btn.innerText = "ENVIAR REGISTRO"; btn.disabled = false;
+            } catch (err) { alert("Error al guardar"); }
         };
 
         let datosLocales = [];
@@ -267,7 +271,7 @@
         window.aplicarFiltros = () => {
             let html = "";
             datosLocales.forEach(d => {
-                html += `<tr>
+                html += `<tr class="hover:bg-blue-50/30 transition-colors">
                     <td class="p-6 text-[11px] font-mono text-slate-400">${d.f}</td>
                     <td class="p-6 font-bold text-slate-800 uppercase italic text-xs">${d.puesto}</td>
                     <td class="p-6 font-bold text-slate-500 text-xs uppercase">${d.tipo}</td>
@@ -295,7 +299,15 @@
             document.getElementById('graficoBarras').innerHTML = html;
         }
 
-        window.eliminar = async (id) => { if(confirm("¿Borrar?")) await deleteDoc(doc(db, "asistencias", id)); };
+        window.eliminar = async (id) => { if(confirm("¿Eliminar?")) await deleteDoc(doc(db, "asistencias", id)); };
+
+        window.exportarExcel = () => {
+            let csv = "\uFEFFFECHA;PUESTO;TIPO;INDICATIVO;OBS\n";
+            datosLocales.forEach(d => { csv += `${d.f};${d.puesto};${d.tipo};${d.paciente};${d.obs}\n`; });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            link.download = `Torrenueva_2026.csv`; link.click();
+        };
     </script>
 </body>
 </html>
