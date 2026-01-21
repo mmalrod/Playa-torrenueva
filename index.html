@@ -13,6 +13,8 @@
         .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 150px; padding-top: 20px; }
         .bar { flex: 1; background: #3b82f6; border-radius: 4px 4px 0 0; position: relative; transition: height 0.5s ease; }
         .bar-label { position: absolute; top: -20px; width: 100%; text-align: center; font-size: 10px; font-weight: bold; }
+        /* Evita que se vean las flechitas de subir/bajar número para un diseño más limpio */
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
@@ -44,10 +46,10 @@
             <input type="hidden" id="puestoActual">
             
             <div>
-                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Identificativo Paciente</label>
+                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">INDICATIVO</label>
                 <div class="flex items-center border-b-2 focus-within:border-blue-500 py-1">
                     <span class="text-xl font-black text-slate-400 mr-1">J48-</span>
-                    <input type="number" id="pacienteNumero" placeholder="000" class="w-full text-xl font-black outline-none bg-transparent" required>
+                    <input type="number" id="pacienteNumero" placeholder="000" min="0" inputmode="numeric" pattern="[0-9]*" class="w-full text-xl font-black outline-none bg-transparent" required>
                 </div>
             </div>
 
@@ -101,14 +103,14 @@
                 <option value="TODOS">Todos los Puestos</option>
                 <option>BRAVO 1</option><option>BRAVO 2</option><option>BRAVO 3</option><option>BRAVO 4</option><option>BRAVO 5</option>
             </select>
-            <input type="text" id="filtroTexto" onkeyup="aplicarFiltros()" placeholder="Buscar Identificativo..." class="p-2 border rounded-xl text-xs">
+            <input type="text" id="filtroTexto" onkeyup="aplicarFiltros()" placeholder="Buscar INDICATIVO..." class="p-2 border rounded-xl text-xs">
         </div>
 
         <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-slate-50 text-[10px] font-black uppercase text-slate-400">
-                        <tr><th class="p-4">Fecha/Hora</th><th class="p-4">Puesto</th><th class="p-4">Tipo</th><th class="p-4">ID Paciente</th><th class="p-4 text-center">Acción</th></tr>
+                        <tr><th class="p-4">Fecha/Hora</th><th class="p-4">Puesto</th><th class="p-4">Tipo</th><th class="p-4">INDICATIVO</th><th class="p-4 text-center">Acción</th></tr>
                     </thead>
                     <tbody id="listaCompleta" class="text-sm divide-y divide-slate-100"></tbody>
                 </table>
@@ -168,6 +170,13 @@
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const num = document.getElementById('pacienteNumero').value;
+            
+            // Verificación extra de número negativo (por si acaso)
+            if (parseInt(num) < 0) {
+                alert("El indicativo no puede ser un número negativo.");
+                return;
+            }
+
             btn.innerText = "ENVIANDO..."; btn.disabled = true;
             try {
                 await addDoc(collection(db, "asistencias"), {
@@ -215,7 +224,7 @@
             filtrados.forEach(d => {
                 html += `<tr><td class="p-4 text-[10px] font-mono text-slate-400">${d.f}</td><td class="p-4 font-bold text-blue-600">${d.puesto}</td><td class="p-4 text-xs font-semibold">${d.tipo}</td><td class="p-4 font-black">${d.paciente}</td><td class="p-4 text-center"><button onclick="eliminar('${d.id}')" class="text-red-400 font-bold text-[10px]">BORRAR</button></td></tr>`;
             });
-            document.getElementById('listaCompleta').innerHTML = html || '<tr><td colspan="5" class="p-10 text-center text-slate-300 italic">No hay registros con estos filtros...</td></tr>';
+            document.getElementById('listaCompleta').innerHTML = html || '<tr><td colspan="5" class="p-10 text-center text-slate-300 italic">No hay registros...</td></tr>';
             document.getElementById('contadorTotal').innerText = filtrados.length;
             actualizarGrafico(filtrados);
         };
@@ -237,7 +246,7 @@
         window.eliminar = async (id) => { if(confirm("¿Borrar?")) await deleteDoc(doc(db, "asistencias", id)); };
 
         window.exportarExcel = () => {
-            let csv = "\uFEFFFecha;Puesto;Tipo;Paciente;Observaciones\n";
+            let csv = "\uFEFFFecha;Puesto;Tipo;INDICATIVO;Observaciones\n";
             datosLocales.forEach(d => csv += `${d.f};${d.puesto};${d.tipo};${d.paciente};${d.obs.replace(/\n/g, ' ')}\n`);
             const link = document.createElement("a");
             link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
