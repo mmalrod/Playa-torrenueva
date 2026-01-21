@@ -10,52 +10,76 @@
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         .fade-in { animation: fadeIn 0.3s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 150px; padding-top: 20px; }
-        .bar { flex: 1; background: #3b82f6; border-radius: 4px 4px 0 0; position: relative; transition: height 0.5s ease; }
-        .bar-label { position: absolute; top: -20px; width: 100%; text-align: center; font-size: 10px; font-weight: bold; }
-        /* Evita que se vean las flechitas de subir/bajar número para un diseño más limpio */
+        
+        /* Gráfico con nombres en el pie de la barra */
+        .bar-chart { display: flex; align-items: flex-end; gap: 10px; height: 250px; padding: 40px 10px 10px 10px; background: #f8fafc; border-radius: 20px; }
+        .bar-container { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+        .bar { 
+            width: 100%; 
+            background: #2563eb; 
+            border-radius: 8px 8px 4px 4px; 
+            position: relative; 
+            transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-end; 
+            align-items: center;
+            min-height: 4px;
+        }
+        .bar-label-num { position: absolute; top: -28px; font-size: 14px; font-weight: 900; color: #1e40af; }
+        .bar-name-inside { 
+            writing-mode: vertical-rl; 
+            transform: rotate(180deg); 
+            color: white; 
+            font-size: 10px; 
+            font-weight: 700; 
+            padding-bottom: 12px; 
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            pointer-events: none;
+        }
+        
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
 
-    <div id="estadoConexion" class="w-full text-center text-[10px] font-bold py-1 bg-emerald-100 text-emerald-700 uppercase hidden">🟢 CONECTADO</div>
-
     <div id="seccionLogin" class="flex items-center justify-center min-h-[90vh] p-4">
         <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
             <div class="bg-blue-700 p-8 text-center text-white">
-                <h1 class="text-3xl font-black italic tracking-tighter">PLAYA-TORR</h1>
-                <p class="text-blue-200 text-xs uppercase tracking-widest mt-2">Torrenueva 2026</p>
+                <h1 class="text-3xl font-black italic tracking-tighter uppercase">Playa-Torr</h1>
+                <p class="text-blue-200 text-[10px] uppercase tracking-[0.2em] mt-2">Torrenueva 2026</p>
             </div>
             <form onsubmit="entrar(event)" class="p-8 space-y-4">
-                <input type="text" id="usuario" placeholder="Usuario (Ej: Bravo 1)" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 outline-none focus:border-blue-500 font-bold" required>
-                <input type="password" id="clave" placeholder="Contraseña" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 outline-none focus:border-blue-500" required>
-                <button type="submit" id="btnLogin" class="w-full bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg hover:bg-blue-800 transition-all">ACCEDER</button>
+                <input type="text" id="usuario" placeholder="USUARIO" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 outline-none focus:border-blue-500 font-bold uppercase" required>
+                <input type="password" id="clave" placeholder="CONTRASEÑA" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 outline-none focus:border-blue-500" required>
+                <button type="submit" id="btnLogin" class="w-full bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg hover:bg-blue-800 transition-all uppercase italic">Acceder</button>
             </form>
         </div>
     </div>
 
     <div id="seccionRegistro" class="hidden max-w-md mx-auto p-4 fade-in">
         <header class="flex justify-between items-center py-6">
-            <h2 id="tituloPuesto" class="text-2xl font-black text-blue-700 uppercase"></h2>
-            <button onclick="salir()" class="bg-red-50 text-red-500 px-4 py-2 rounded-xl font-bold text-xs">SALIR</button>
+            <h2 id="tituloPuesto" class="text-2xl font-black text-blue-700 uppercase italic"></h2>
+            <button onclick="salir()" class="bg-red-50 text-red-500 px-4 py-2 rounded-xl font-bold text-xs uppercase">Salir</button>
         </header>
 
-        <form id="formulario" class="bg-white p-6 rounded-3xl shadow-xl space-y-5 relative overflow-hidden">
+        <form id="formulario" class="bg-white p-6 rounded-3xl shadow-xl space-y-6 relative overflow-hidden border border-slate-100">
             <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
             <input type="hidden" id="puestoActual">
             
             <div>
-                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">INDICATIVO</label>
-                <div class="flex items-center border-b-2 focus-within:border-blue-500 py-1">
-                    <span class="text-xl font-black text-slate-400 mr-1">J48-</span>
-                    <input type="number" id="pacienteNumero" placeholder="000" min="0" inputmode="numeric" pattern="[0-9]*" class="w-full text-xl font-black outline-none bg-transparent" required>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Indicativo</label>
+                <div class="flex items-center border-b-2 border-slate-100 focus-within:border-blue-500 py-2">
+                    <span class="text-2xl font-black text-slate-300 mr-2">J48-</span>
+                    <input type="number" id="pacienteNumero" placeholder="000" min="0" inputmode="numeric" class="w-full text-2xl font-black outline-none bg-transparent" required>
                 </div>
             </div>
 
             <div>
-                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tipo de Asistencia</label>
-                <select id="tipo" class="w-full text-lg font-semibold border-b-2 py-2 outline-none bg-transparent focus:border-blue-500" required>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tipo de Asistencia</label>
+                <select id="tipo" class="w-full text-lg font-bold border-b-2 border-slate-100 py-3 outline-none bg-transparent focus:border-blue-500" required>
                     <option value="" disabled selected>Seleccionar...</option>
                     <option>Picadura Medusa</option>
                     <option>Herida / Corte</option>
@@ -67,52 +91,58 @@
             </div>
 
             <div>
-                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Observaciones (Opcional)</label>
-                <textarea id="obs" class="w-full bg-slate-50 border-2 border-slate-100 p-4 h-32 rounded-2xl outline-none focus:border-blue-500 resize-none"></textarea>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Observaciones (Opcional)</label>
+                <textarea id="obs" placeholder="Detalles adicionales..." class="w-full bg-slate-50 border-2 border-slate-100 p-4 h-32 rounded-2xl outline-none focus:border-blue-500 resize-none font-medium mt-2"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-emerald-500 text-white font-black py-4 rounded-2xl shadow-lg hover:bg-emerald-600 active:scale-95 transition-all text-lg uppercase">Enviar Registro</button>
+            <button type="submit" class="w-full bg-emerald-500 text-white font-black py-5 rounded-2xl shadow-lg hover:bg-emerald-600 active:scale-95 transition-all text-lg uppercase">Enviar Registro</button>
         </form>
     </div>
 
-    <div id="seccionAdmin" class="hidden p-4 md:p-8 max-w-7xl mx-auto fade-in">
+    <div id="seccionAdmin" class="hidden p-4 md:p-8 max-w-[98%] mx-auto fade-in">
         <div class="flex justify-between items-center mb-6 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-            <h1 class="text-xl font-black text-blue-700 italic tracking-tighter uppercase">Admin Torrenueva</h1>
+            <h1 class="text-xl font-black text-blue-700 uppercase italic tracking-tighter">Control Torrenueva</h1>
             <div class="flex gap-2">
-                <button onclick="exportarExcel()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold text-[10px] shadow-md">📊 EXCEL</button>
-                <button onclick="salir()" class="bg-slate-100 text-slate-500 px-4 py-2 rounded-xl font-bold text-[10px]">SALIR</button>
+                <button onclick="exportarExcel()" class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold text-xs shadow-md uppercase">Excel</button>
+                <button onclick="salir()" class="bg-slate-100 text-slate-500 px-4 py-2 rounded-xl font-bold text-xs uppercase">Salir</button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="md:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase mb-4 tracking-widest">Estadísticas por Asistencia</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div class="md:col-span-3 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase mb-4 tracking-[0.2em]">Estadísticas por Asistencia</h3>
                 <div id="graficoBarras" class="bar-chart"></div>
-                <div id="leyendaGrafico" class="flex flex-wrap gap-2 mt-4"></div>
             </div>
             <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-center items-center">
-                <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Total Registros</p>
-                <p id="contadorTotal" class="text-6xl font-black text-blue-700">0</p>
+                <p class="text-[10px] font-black text-slate-400 uppercase mb-2 tracking-widest text-center">Total Registros</p>
+                <p id="contadorTotal" class="text-7xl font-black text-blue-700 leading-none">0</p>
             </div>
         </div>
 
         <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100 mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <input type="date" id="fechaDesde" onchange="aplicarFiltros()" class="p-2 border rounded-xl text-xs">
-            <input type="date" id="fechaHasta" onchange="aplicarFiltros()" class="p-2 border rounded-xl text-xs">
-            <select id="filtroPuesto" onchange="aplicarFiltros()" class="p-2 border rounded-xl text-xs font-bold uppercase">
+            <input type="date" id="fechaDesde" onchange="aplicarFiltros()" class="p-3 border-2 border-slate-50 rounded-xl text-xs font-bold">
+            <input type="date" id="fechaHasta" onchange="aplicarFiltros()" class="p-3 border-2 border-slate-50 rounded-xl text-xs font-bold">
+            <select id="filtroPuesto" onchange="aplicarFiltros()" class="p-3 border-2 border-slate-50 rounded-xl text-xs font-black uppercase">
                 <option value="TODOS">Todos los Puestos</option>
                 <option>BRAVO 1</option><option>BRAVO 2</option><option>BRAVO 3</option><option>BRAVO 4</option><option>BRAVO 5</option>
             </select>
-            <input type="text" id="filtroTexto" onkeyup="aplicarFiltros()" placeholder="Buscar INDICATIVO..." class="p-2 border rounded-xl text-xs">
+            <input type="text" id="filtroTexto" onkeyup="aplicarFiltros()" placeholder="Buscar Indicativo..." class="p-3 border-2 border-slate-50 rounded-xl text-xs font-bold uppercase">
         </div>
 
         <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-slate-50 text-[10px] font-black uppercase text-slate-400">
-                        <tr><th class="p-4">Fecha/Hora</th><th class="p-4">Puesto</th><th class="p-4">Tipo</th><th class="p-4">INDICATIVO</th><th class="p-4 text-center">Acción</th></tr>
+                    <thead class="bg-slate-50 text-[10px] font-black uppercase text-slate-400 border-b">
+                        <tr>
+                            <th class="p-5">Fecha / Hora</th>
+                            <th class="p-5">Puesto</th>
+                            <th class="p-5">Tipo</th>
+                            <th class="p-5 text-blue-700">Indicativo</th>
+                            <th class="p-5">Observaciones</th>
+                            <th class="p-5 text-center">Acción</th>
+                        </tr>
                     </thead>
-                    <tbody id="listaCompleta" class="text-sm divide-y divide-slate-100"></tbody>
+                    <tbody id="listaCompleta" class="text-sm divide-y divide-slate-100 font-medium"></tbody>
                 </table>
             </div>
         </div>
@@ -137,7 +167,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        enableIndexedDbPersistence(db).catch(() => console.log("Offline listo"));
+        enableIndexedDbPersistence(db).catch(() => console.log("Offline OK"));
 
         window.entrar = async (e) => {
             e.preventDefault();
@@ -148,7 +178,7 @@
             let email = loginEmail === "admin" ? "admin@playatorrenueva.com" : `${loginEmail}@playatorrenueva.com`;
             let nombreLimpio = rawUser.toUpperCase().replace("BRAVO", "BRAVO ").replace(/\s+/g, ' ').trim();
 
-            btn.innerText = "ENTRANDO..."; btn.disabled = true;
+            btn.innerText = "ACCEDIENDO..."; btn.disabled = true;
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, pass);
                 document.getElementById('seccionLogin').classList.add('hidden');
@@ -160,7 +190,7 @@
                     document.getElementById('tituloPuesto').innerText = nombreLimpio;
                     document.getElementById('puestoActual').value = nombreLimpio;
                 }
-            } catch (err) { alert("Usuario o clave incorrectos."); }
+            } catch (err) { alert("Acceso denegado."); }
             btn.innerText = "ACCEDER"; btn.disabled = false;
         };
 
@@ -170,30 +200,26 @@
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const num = document.getElementById('pacienteNumero').value;
-            
-            // Verificación extra de número negativo (por si acaso)
-            if (parseInt(num) < 0) {
-                alert("El indicativo no puede ser un número negativo.");
-                return;
-            }
-
             btn.innerText = "ENVIANDO..."; btn.disabled = true;
             try {
                 await addDoc(collection(db, "asistencias"), {
                     puesto: document.getElementById('puestoActual').value,
                     paciente: `J48-${num}`,
                     tipo: document.getElementById('tipo').value,
-                    obs: document.getElementById('obs').value,
+                    obs: document.getElementById('obs').value || "Sin observaciones",
                     fecha: serverTimestamp(),
                     fechaISO: new Date().toISOString().split('T')[0],
                     fechaTxt: new Date().toLocaleString()
                 });
-                alert("✅ Registrado J48-" + num); e.target.reset();
+                alert("✅ Registrado J48-" + num); 
+                e.target.reset();
             } catch (err) { alert("Guardado en local"); e.target.reset(); }
             btn.innerText = "ENVIAR REGISTRO"; btn.disabled = false;
         };
 
         let datosLocales = [];
+        let filtradosActuales = [];
+
         function iniciarEscuchaAdmin() {
             const q = query(collection(db, "asistencias"), orderBy("fecha", "desc"), limit(1000));
             onSnapshot(q, (snap) => {
@@ -214,43 +240,61 @@
             const fD = document.getElementById('fechaDesde').value;
             const fH = document.getElementById('fechaHasta').value;
 
-            const filtrados = datosLocales.filter(d => {
+            filtradosActuales = datosLocales.filter(d => {
                 return (d.paciente.toLowerCase().includes(txt)) && 
                        (pst === "TODOS" || d.puesto === pst) &&
                        (!fD || d.fISO >= fD) && (!fH || d.fISO <= fH);
             });
 
             let html = "";
-            filtrados.forEach(d => {
-                html += `<tr><td class="p-4 text-[10px] font-mono text-slate-400">${d.f}</td><td class="p-4 font-bold text-blue-600">${d.puesto}</td><td class="p-4 text-xs font-semibold">${d.tipo}</td><td class="p-4 font-black">${d.paciente}</td><td class="p-4 text-center"><button onclick="eliminar('${d.id}')" class="text-red-400 font-bold text-[10px]">BORRAR</button></td></tr>`;
+            filtradosActuales.forEach(d => {
+                html += `<tr>
+                    <td class="p-5 text-[10px] font-mono text-slate-400">${d.f}</td>
+                    <td class="p-5 font-black text-blue-600 italic uppercase">${d.puesto}</td>
+                    <td class="p-5 font-bold text-slate-700 uppercase text-xs">${d.tipo}</td>
+                    <td class="p-5 font-black text-blue-900">${d.paciente}</td>
+                    <td class="p-5 text-xs text-slate-500 max-w-xs truncate" title="${d.obs}">${d.obs}</td>
+                    <td class="p-5 text-center"><button onclick="eliminar('${d.id}')" class="text-red-400 font-bold text-[10px] hover:text-red-600">BORRAR</button></td>
+                </tr>`;
             });
-            document.getElementById('listaCompleta').innerHTML = html || '<tr><td colspan="5" class="p-10 text-center text-slate-300 italic">No hay registros...</td></tr>';
-            document.getElementById('contadorTotal').innerText = filtrados.length;
-            actualizarGrafico(filtrados);
+            document.getElementById('listaCompleta').innerHTML = html || '<tr><td colspan="6" class="p-10 text-center text-slate-300 italic">No hay registros...</td></tr>';
+            document.getElementById('contadorTotal').innerText = filtradosActuales.length;
+            actualizarGrafico(filtradosActuales);
         };
 
         function actualizarGrafico(datos) {
             const resumen = {};
-            datos.forEach(d => resumen[d.tipo] = (resumen[d.tipo] || 0) + 1);
+            const tipos = ["Picadura Medusa", "Herida / Corte", "Erizo / Pez Araña", "Golpe de Calor", "Rescate Acuático", "Otro"];
+            tipos.forEach(t => resumen[t] = 0);
+            datos.forEach(d => resumen[d.tipo]++);
+            
             const max = Math.max(...Object.values(resumen), 1);
-            let htmlB = ""; let htmlL = "";
-            Object.keys(resumen).forEach(t => {
-                const v = resumen[t];
-                htmlB += `<div class="bar" style="height: ${(v/max)*100}%"><span class="bar-label">${v}</span></div>`;
-                htmlL += `<span class="text-[9px] bg-blue-50 text-blue-600 px-2 py-1 rounded-lg font-black uppercase">${t}</span>`;
+            let html = "";
+            tipos.forEach(tipo => {
+                const valor = resumen[tipo];
+                const pct = (valor / max) * 100;
+                html += `
+                    <div class="bar-container">
+                        <div class="bar" style="height: ${pct}%">
+                            <span class="bar-label-num">${valor > 0 ? valor : ''}</span>
+                            <span class="bar-name-inside">${valor > 0 ? tipo : ''}</span>
+                        </div>
+                    </div>`;
             });
-            document.getElementById('graficoBarras').innerHTML = htmlB;
-            document.getElementById('leyendaGrafico').innerHTML = htmlL;
+            document.getElementById('graficoBarras').innerHTML = html;
         }
 
-        window.eliminar = async (id) => { if(confirm("¿Borrar?")) await deleteDoc(doc(db, "asistencias", id)); };
+        window.eliminar = async (id) => { if(confirm("¿Eliminar registro?")) await deleteDoc(doc(db, "asistencias", id)); };
 
         window.exportarExcel = () => {
-            let csv = "\uFEFFFecha;Puesto;Tipo;INDICATIVO;Observaciones\n";
-            datosLocales.forEach(d => csv += `${d.f};${d.puesto};${d.tipo};${d.paciente};${d.obs.replace(/\n/g, ' ')}\n`);
+            let csv = "\uFEFFFECHA / HORA;PUESTO;TIPO;INDICATIVO;OBSERVACIONES\n";
+            filtradosActuales.forEach(d => {
+                let obs = d.obs.replace(/(\r\n|\n|\r|;)/gm, " ");
+                csv += `${d.f};${d.puesto};${d.tipo};${d.paciente};${obs}\n`;
+            });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-            link.download = "Reporte_Torrenueva_2026.csv"; link.click();
+            link.download = `Torrenueva_2026.csv`; link.click();
         };
     </script>
 </body>
